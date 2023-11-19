@@ -1,0 +1,1 @@
+INSERT INTO "user" (email_address, username, password_hash, role)  VALUES ('algiesampson@gmail.com', 'algiesampson', '$2b$12$kHbamGqsTNiLfRPEPJM0mebQA87wbf.jtNb.M72NY2d3XGPeHP4k2', 'User');

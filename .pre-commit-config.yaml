@@ -1,0 +1,56 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.5.0
+    hooks:
+      # - id: detect-aws-credentials
+      - id: detect-private-key
+      - id: check-json
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.12.0
+    hooks:
+      - id: hadolint-docker
+        args: ["--ignore", "DL3059"]
+  - repo: https://github.com/pycqa/isort
+    rev: 5.12.0
+    hooks:
+      - id: isort
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.1.5
+    hooks:
+      - id: ruff
+        args: [ --fix ]
+  - repo: https://github.com/psf/black
+    rev: 23.11.0
+    hooks:
+      - id: black
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.336
+    hooks:
+      - id: pyright
+  - repo: https://github.com/thibaudcolas/curlylint
+    rev: v0.13.1
+    hooks:
+      - id: curlylint
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: v8.54.0
+    hooks:
+      - id: eslint
+  - repo: local
+    # These can be run from the local repo as it is much faster when we will be installing them for the ide anyway.
+    # Also don't have to maintain package versions here and an additional issue with dependencies in pyright.
+    hooks:
+      - id: poetry-check
+        name: poetry-check
+        description: run poetry check to validate config
+        entry: poetry check
+        language: python
+        pass_filenames: false
+        files: ^(.*/)?pyproject\.toml$
+      - id: pytest
+        name: pytest
+        entry: poetry run pytest --cov=. tests/
+        language: system
+        pass_filenames: false
+        verbose: true
+        stages:
+          - manual

@@ -1,0 +1,84 @@
+version: "3.8"
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: postgres
+    restart: unless-stopped
+    env_file: env/local.env
+    networks:
+      - backend
+    ports:
+      - "5432:5432"
+    volumes:
+      - 'postgres:/var/lib/postgresql/data'
+    healthcheck:
+      test: [ "CMD", "pg_isready", "-q", "-d", "postgres", "-U", "postgres" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+  redis:
+    image: redis:7
+    container_name: redis
+    restart: unless-stopped
+    networks:
+      - backend
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: [ "CMD", "redis-cli","ping" ]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+  init_backend:
+    image: init_backend
+    container_name: init_backend
+    env_file: env/local.env
+    networks:
+      - backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: docker/init_backend.Dockerfile
+  backend:
+    image: backend
+    container_name: backend
+    restart: unless-stopped
+    env_file: env/local.env
+    networks:
+      - backend
+    ports:
+      - 80:80
+    depends_on:
+      init_backend:
+        condition: service_completed_successfully
+    build:
+      context: .
+      dockerfile: docker/backend.Dockerfile
+  worker:
+    image: worker
+    container_name: worker
+    restart: unless-stopped
+    env_file: env/local.env
+    networks:
+      - backend
+    depends_on:
+      init_backend:
+        condition: service_completed_successfully
+    build:
+      context: .
+      dockerfile: docker/worker.Dockerfile
+
+networks:
+  backend:
+    external: false
+
+volumes:
+  postgres:
+    external: false

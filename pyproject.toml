@@ -1,0 +1,73 @@
+[tool.poetry]
+name = "fixture-prediction"
+version = "0.1.0"
+description = ""
+authors = ["Algernon Sampson <algiesampson@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+sqlalchemy = { version = "2.0.23", extras = ["asyncio"] }
+psycopg2 = "2.9.9"
+python-multipart = "0.0.6"
+pydantic_settings = "2.0.3"
+pydantic = { version = "2.5.1", extras = ["email", "email-validator"] }
+
+[tool.poetry.group.backend]
+
+[tool.poetry.group.backend.dependencies]
+fastapi= "0.103.1"
+python-jose = { version = "3.3.0", extras = ["cryptography"] }
+cryptography = "41.0.3"
+passlib = { version = "1.7.4", extras = ["bcrypt"] }
+requests = "2.31.0"
+celery = { version = "5.3.5", extras = ["redis"] }
+asyncpg = "0.28.0"
+jinja2 = "3.1.2"
+
+[tool.poetry.group.init]
+optional = true
+
+[tool.poetry.group.init.dependencies]
+sqlalchemy-utils = "0.41.1"
+
+[tool.poetry.group.worker]
+optional = true
+
+[tool.poetry.group.worker.dependencies]
+celery = { version = "5.3.5", extras = ["redis"] }
+asyncpg = "0.28.0"
+
+[tool.poetry.group.dev.dependencies]
+uvicorn = "0.23.2"
+
+[tool.poetry.group.test.dependencies]
+pytest = "7.4.3"
+pytest-cov = "4.1.0"
+
+[tool.poetry.group.workflow.dependencies]
+pre-commit = "3.5.0"
+
+[tool.black]
+line-length = 120
+
+[tool.pyright]
+useLibraryCodeForTypes = false
+reportMissingImports = false
+
+[tool.ruff.lint]
+ignore = ["E501", "E722"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+"utils/" = ["F401"]
+
+[tool.isort]
+profile = "black"
+
+[tool.hadolint-docker]
+ignore = ["DL3059"]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
