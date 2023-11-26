@@ -73,6 +73,7 @@ def migrate():
 
 
 def main():
+    print("[*] Starting postgres init")
     if exists():
         drop()
 

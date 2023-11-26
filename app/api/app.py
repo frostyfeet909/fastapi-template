@@ -33,15 +33,18 @@ async def lifespan(app: FastAPI):
         print("[!!] Async connction was not setup!")
         traceback.print_exc()
 
+    # Only needed for scopes
+    engine.dispose_sync_engine()
+
     yield
 
     # shutdown
     try:
-        engine.sync_engine.dispose()
+        engine.dispose_sync_engine()
     except:
         pass
     try:
-        await engine.async_engine.dispose()
+        await engine.dispose_async_engine()
     except:
         pass
 

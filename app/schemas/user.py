@@ -78,7 +78,8 @@ class NewUser(BaseUser):
     password: field_password
 
     @field_validator("password")
-    def validate_regex_password(cls, value: SecretStr) -> SecretStr:  # noqa
+    @classmethod
+    def validate_regex_password(cls, value: SecretStr) -> SecretStr:
         if not check_password_strength(value):
             raise ValueError(
                 "Password was not of sufficient strength - Minimum eight characters, at least one letter, one number and one special character"

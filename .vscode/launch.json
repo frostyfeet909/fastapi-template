@@ -1,0 +1,30 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Pre-commit Hooks",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/.venv/Scripts/pre-commit.exe",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Run Pytest",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/.venv/Scripts/pre-commit.exe",
+            "args": ["run", "pytest", "--all-files", "--hook", "manual"],
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": false
+        }
+    ]
+}

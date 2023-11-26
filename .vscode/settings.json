@@ -1,0 +1,13 @@
+{
+    "editor.rulers": [120],
+    "[python]": {
+      "editor.formatOnSave": true,
+      "editor.codeActionsOnSave": {
+        "source.fixAll": true,
+        "source.organizeImports": true
+      },
+      "isort.args":["--profile", "black"],
+      "ruff.organizeImports": false,
+      "editor.defaultFormatter": "ms-python.black-formatter"
+    }
+}

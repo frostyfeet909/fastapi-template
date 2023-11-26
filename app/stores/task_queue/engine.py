@@ -1,4 +1,28 @@
-from celery import Celery
 from config.redis_config import settings
 
-app = Celery("tasks", broker=settings.CELERY_BROKER_URI, backend=settings.CELERY_BROKER_URI)
+app = None
+client = None
+
+if settings.NEED_CELERY_BROKER_URI:
+    broker_uri = settings.CELERY_BROKER_URI.unicode_string()
+    backend_uri = settings.CELERY_BACKEND_URI.unicode_string() if settings.CELERY_BACKEND_URI else None
+    try:
+        from celery import Celery
+
+        app = Celery(
+            "tasks",
+            broker=broker_uri,
+            backend=backend_uri,
+        )
+        print("[+] Created redis app on {0}/{1}".format(broker_uri, backend_uri))
+    except ModuleNotFoundError:
+        pass
+
+if settings.NEED_INSECURE_URI:
+    try:
+        import redis
+
+        client = redis.from_url(settings.INSECURE_URI.unicode_string())
+        print("[+] Created redis client on {0}".format(settings.INSECURE_URI))
+    except ModuleNotFoundError:
+        pass

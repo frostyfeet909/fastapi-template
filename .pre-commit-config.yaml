@@ -15,7 +15,7 @@ repos:
     hooks:
       - id: isort
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.1.5
+    rev: v0.1.6
     hooks:
       - id: ruff
         args: [ --fix ]
@@ -24,7 +24,7 @@ repos:
     hooks:
       - id: black
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.336
+    rev: v1.1.337
     hooks:
       - id: pyright
   - repo: https://github.com/thibaudcolas/curlylint
