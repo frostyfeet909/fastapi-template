@@ -12,7 +12,7 @@ if settings.NEED_SYNC_URI:
         sync_engine = sqlalchemy.create_engine(uri, pool_pre_ping=True, pool_recycle=3600)
         print("[+] Created sync sync_engine on {0}".format(uri))
     except ModuleNotFoundError:
-        pass
+        raise ModuleNotFoundError("Psycopg is not installed.")
 
 if settings.NEED_ASYNC_URI:
     uri = convert_pydantic_to_sqlalchemy_uri(settings.ASYNC_URI)
@@ -20,7 +20,7 @@ if settings.NEED_ASYNC_URI:
         async_engine = sqlalchemy_async.create_async_engine(uri, pool_pre_ping=True, pool_recycle=3600)
         print("[+] Created async sync_engine on {0}".format(uri))
     except ModuleNotFoundError:
-        pass
+        raise ModuleNotFoundError("Asyncpg is not installed.")
 
 
 def dispose_sync_engine():

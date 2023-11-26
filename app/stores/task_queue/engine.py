@@ -16,7 +16,7 @@ if settings.NEED_CELERY_BROKER_URI:
         )
         print("[+] Created redis app on {0}/{1}".format(broker_uri, backend_uri))
     except ModuleNotFoundError:
-        pass
+        raise ModuleNotFoundError("Celery is not installed.")
 
 if settings.NEED_INSECURE_URI:
     try:
@@ -25,4 +25,4 @@ if settings.NEED_INSECURE_URI:
         client = redis.from_url(settings.INSECURE_URI.unicode_string())
         print("[+] Created redis client on {0}".format(settings.INSECURE_URI))
     except ModuleNotFoundError:
-        pass
+        raise ModuleNotFoundError("Redis is not installed.")

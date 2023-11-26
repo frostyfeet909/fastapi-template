@@ -22,7 +22,7 @@ async def get_async_connection() -> "AsyncIterator[AsyncConnection]":
         yield conn
     except Exception as ex:
         await conn.rollback()
-        print("[!] Rolled back")
+        print("[!] Rolled back with exception {0}".format(ex))
         raise ex
     finally:
         await conn.close()
@@ -34,7 +34,7 @@ async def depend_async_connection() -> "AsyncIterator[AsyncConnection]":
         yield conn
     except Exception as ex:
         await conn.rollback()
-        print("[!] Rolled back")
+        print("[!] Rolled back with exception {0}".format(ex))
         raise ex
     finally:
         await conn.close()

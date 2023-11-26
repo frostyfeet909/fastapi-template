@@ -3,7 +3,7 @@ from stores.task_queue.engine import client
 
 
 def change_redis_password():
-    print("[*] Changing redis password")
+    print("[+] Changing redis password")
     response = client.execute_command("CONFIG SET", "requirepass", redis_settings.PASSWORD.get_secret_value())
     if not response:
         raise RuntimeError("[!!] Failed to change redis password")

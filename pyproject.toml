@@ -39,6 +39,12 @@ optional = true
 celery = { version = "5.3.5", extras = ["redis"] }
 asyncpg = "0.28.0"
 
+[tool.poetry.group.flower]
+optional = true
+
+[tool.poetry.group.flower.dependencies]
+flower = "2.0.1"
+
 [tool.poetry.group.dev.dependencies]
 uvicorn = "0.23.2"
 
