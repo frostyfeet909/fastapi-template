@@ -1,18 +1,16 @@
 import traceback
 from contextlib import asynccontextmanager
 from datetime import datetime
-from os import path
 from typing import Callable, cast
 
+from api import frontend
 from api.endpoints import v1
 from core import security
 from fastapi import FastAPI, Request, Response
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.staticfiles import StaticFiles
 from stores import db
 from stores.db import engine
 
-DIR__static = path.abspath(path.join(__file__, "..", "static"))
 origins = [
     "http://127.0.0.1:5173",  # TODO: env?
 ]
@@ -53,10 +51,9 @@ app = FastAPI(docs_url=None, redoc_url=None, lifespan=lifespan)
 
 # Mount API Version
 app.mount(v1.PATH__route, v1.app)
-app.mount("/", v1.app)  # Latest version
 
-# Mount Files
-app.mount("/static", StaticFiles(directory=DIR__static), name="static")
+# Mount Frontend
+app.mount("/", frontend.app)
 
 # Mount Middleware
 app.add_middleware(

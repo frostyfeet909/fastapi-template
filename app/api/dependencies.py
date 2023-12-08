@@ -1,11 +1,7 @@
-from os import path
 from typing import Any
 
 from fastapi import HTTPException, status
-from fastapi.templating import Jinja2Templates
 
-DIR__templates = path.abspath(path.join(__file__, "..", "templates"))
-TEMPLATES = Jinja2Templates(directory=DIR__templates)
 RESPONSES__validation = {
     status.HTTP_401_UNAUTHORIZED: {
         "description": "Either the token has expired or the credentials are not valid. Please re-authenticate."

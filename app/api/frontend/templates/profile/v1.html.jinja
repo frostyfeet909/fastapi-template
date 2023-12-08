@@ -1,0 +1,4 @@
+{% extends "base/v1.html.jinja" %}
+{% block content %}This is a profile, <button id="the_button"></button>{% endblock %}
+{% block scripts %} <script src="{{ url_for('static', path='/js/profile.ts') }}" type="module"></script> {% endblock %}
+{% block title %}Profile{% endblock %}
